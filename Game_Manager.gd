@@ -150,7 +150,7 @@ func play_game(data):
 			get_node("Winner").visible = true
 			get_node("Winning").play()
 		if data.winner != my_id:
-			get_node("Loser").visbile = true
+			get_node("Loser").visible = true
 			get_node("Losing").play()
 		
 	pass
