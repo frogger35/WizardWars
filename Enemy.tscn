@@ -1,0 +1,128 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://front hand spinning counterclock.png" type="Texture" id=1]
+[ext_resource path="res://front hand station.png" type="Texture" id=2]
+[ext_resource path="res://front hand spinning clockwise.png" type="Texture" id=3]
+[ext_resource path="res://wizard.png" type="Texture" id=4]
+[ext_resource path="res://Enemy.gd" type="Script" id=5]
+
+[node name="Enemy" type="Node2D"]
+scale = Vector2( -1, 1 )
+script = ExtResource( 5 )
+
+[node name="Wizard" type="Sprite" parent="."]
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
+
+[node name="rotator_cc" type="Node2D" parent="."]
+visible = false
+position = Vector2( -29, -7 )
+rotation = -6.28319
+
+[node name="FrontHandSpinningCounterclock" type="Sprite" parent="rotator_cc"]
+position = Vector2( 29.1415, -4.77171 )
+rotation = -0.230383
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 1 )
+offset = Vector2( 0.328, 0 )
+
+[node name="rotator_cw" type="Node2D" parent="."]
+visible = false
+position = Vector2( -30, -8 )
+rotation = 6.28319
+
+[node name="FrontHandSpinningClockwise" type="Sprite" parent="rotator_cw"]
+position = Vector2( 24, 18 )
+rotation = 0.546288
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="FrontHandStation" type="Sprite" parent="."]
+position = Vector2( -21, -36 )
+rotation = -1.5708
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="health" type="Label" parent="."]
+margin_left = 71.0
+margin_top = -157.0
+margin_right = 95.0
+margin_bottom = -143.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 0.270588, 0.807843, 0.0980392, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shield" type="Label" parent="."]
+margin_left = -9.0
+margin_top = -157.0
+margin_right = 15.0
+margin_bottom = -143.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 0.388235, 0.72549, 1, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fire" type="Label" parent="."]
+margin_left = -160.0
+margin_top = -68.0
+margin_right = -136.0
+margin_bottom = -54.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 1, 0.403922, 0.388235, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Labels" type="Label" parent="."]
+margin_left = -111.0
+margin_top = -114.0
+margin_right = -41.0
+margin_bottom = -100.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 1, 0.403922, 0.388235, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Resources:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ice" type="Label" parent="."]
+margin_left = -163.0
+margin_top = -20.0
+margin_right = -139.0
+margin_bottom = -6.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 0.207843, 0.219608, 0.905882, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Arcane" type="Label" parent="."]
+margin_left = -166.0
+margin_top = 36.0
+margin_right = -142.0
+margin_bottom = 50.0
+rect_scale = Vector2( -3, 3 )
+custom_colors/font_color = Color( 0.556863, 0.407843, 0.92549, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}

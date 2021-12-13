@@ -1,0 +1,183 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Background.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game_Manager.gd" type="Script" id=2]
+[ext_resource path="res://ready_fight.wav" type="AudioStream" id=3]
+[ext_resource path="res://victory.wav" type="AudioStream" id=4]
+[ext_resource path="res://defeat.wav" type="AudioStream" id=5]
+[ext_resource path="res://415804__sunsai__mushroom-background-music.wav" type="AudioStream" id=6]
+[ext_resource path="res://backgroundmusic.gd" type="Script" id=7]
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Background" parent="." instance=ExtResource( 1 )]
+
+[node name="Menu" type="Control" parent="."]
+margin_left = -1.0
+margin_right = -1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit Button" type="Button" parent="Menu"]
+margin_left = 464.0
+margin_top = 371.0
+margin_right = 541.0
+margin_bottom = 391.0
+text = "Exit Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Find Match" type="Button" parent="Menu"]
+margin_left = 463.0
+margin_top = 311.0
+margin_right = 545.0
+margin_bottom = 331.0
+text = "Find Match"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+margin_left = 669.0
+margin_top = 183.0
+margin_right = 866.0
+margin_bottom = 480.0
+color = Color( 0.172549, 0.141176, 0.141176, 0.6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Menu/ColorRect"]
+margin_left = -1.0
+margin_top = 2.0
+margin_right = 195.0
+margin_bottom = 297.0
+text = "This text will show you how to play the game"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameScreen" type="Control" parent="."]
+visible = false
+margin_right = 1025.0
+margin_bottom = 623.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="GameScreen"]
+margin_left = 422.0
+margin_top = 24.0
+margin_right = 561.0
+margin_bottom = 65.0
+color = Color( 0.207843, 0.176471, 0.176471, 0.458824 )
+
+[node name="Label" type="Label" parent="GameScreen/ColorRect"]
+margin_right = 78.0
+margin_bottom = 21.0
+text = "Current Turn:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player_Turn" type="Label" parent="GameScreen/ColorRect"]
+margin_left = 90.0
+margin_top = -1.0
+margin_right = 130.0
+margin_bottom = 13.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="GameScreen/ColorRect"]
+margin_left = 1.0
+margin_top = 25.0
+margin_right = 41.0
+margin_bottom = 39.0
+text = "Total Turns:"
+
+[node name="Turn_Counter" type="Label" parent="GameScreen/ColorRect"]
+margin_left = 79.0
+margin_top = 26.0
+margin_right = 119.0
+margin_bottom = 40.0
+
+[node name="Hand" type="Control" parent="GameScreen"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="players" type="Control" parent="GameScreen"]
+
+[node name="ReadyFight" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+
+[node name="Winner" type="Label" parent="."]
+visible = false
+margin_left = 15.0
+margin_top = 111.0
+margin_right = 116.0
+margin_bottom = 125.0
+rect_scale = Vector2( 10, 10 )
+text = "WINNER!!!!!!111"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Loser" type="Label" parent="."]
+visible = false
+margin_left = 9.0
+margin_top = 116.0
+margin_right = 121.0
+margin_bottom = 130.0
+rect_scale = Vector2( 10, 10 )
+text = "LOSERRRR!!!!!!1!!!!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Winning" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Losing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Exit Game" type="Button" parent="."]
+visible = false
+margin_left = 453.0
+margin_top = 501.0
+margin_right = 530.0
+margin_bottom = 521.0
+text = "Exit Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -17.479
+autoplay = true
+script = ExtResource( 7 )
+
+[node name="Finding Game" type="Label" parent="."]
+visible = false
+margin_left = 362.0
+margin_top = 256.0
+margin_right = 450.0
+margin_bottom = 270.0
+rect_scale = Vector2( 3, 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Finding Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Menu/Exit Button" to="." method="_on_Exit_Button_pressed"]
+[connection signal="pressed" from="Menu/Find Match" to="." method="_on_Find_Match_pressed"]
+[connection signal="pressed" from="Exit Game" to="." method="_on_Exit_Game_pressed"]
+[connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="_on_AudioStreamPlayer2D_finished"]
