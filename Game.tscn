@@ -114,7 +114,7 @@ margin_bottom = 40.0
 
 [node name="players" type="Control" parent="GameScreen"]
 
-[node name="ReadyFight" type="AudioStreamPlayer2D" parent="."]
+[node name="ReadyFight" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 
 [node name="Winner" type="Label" parent="."]
@@ -141,10 +141,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Winning" type="AudioStreamPlayer2D" parent="."]
+[node name="Winning" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 
-[node name="Losing" type="AudioStreamPlayer2D" parent="."]
+[node name="Losing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
 [node name="Exit Game" type="Button" parent="."]
@@ -158,7 +158,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -17.479
 autoplay = true
