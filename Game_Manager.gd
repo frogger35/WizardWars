@@ -4,7 +4,10 @@ extends Node
 onready var enemy_prefab = preload("res://Enemy.tscn")
 onready var player_prefab = preload("res://Player.tscn")
 onready var card_prefab = preload("res://Card.tscn")
-export var websocket_url = "ws://72.89.52.187:8080"
+onready var card_background_fire = preload("res://fire.png")
+onready var card_background_ice = preload("res://ice.png")
+onready var card_background_arcane = preload("res://arcane.png")
+export var websocket_url = "ws://localhost:8080"
 var my_id = null
 var cards_in_game = {}
 var escape_menu = true
@@ -18,6 +21,7 @@ var playerTwo = null
 var players = null
 var first_person = 0
 var card_count = 0
+var debug = false
 # Our WebSocketClient instance.
 var _client = WebSocketClient.new()
 
@@ -76,16 +80,19 @@ func _on_Exit_Button_pressed():
 
 
 func _on_Find_Match_pressed():
-	_client.connect("connection_closed", self, "_closed")
-	_client.connect("connection_error", self, "_closed")
-	_client.connect("connection_established", self, "_connected")
-	_client.connect("data_received", self, "_on_data")
+	if !debug:
+		_client.connect("connection_closed", self, "_closed")
+		_client.connect("connection_error", self, "_closed")
+		_client.connect("connection_established", self, "_connected")
+		_client.connect("data_received", self, "_on_data")
 
-	# Initiate connection to the given URL.
-	var err = _client.connect_to_url(websocket_url)
-	if err != OK:
-		print("Unable to connect")
-		set_process(false)
+		# Initiate connection to the given URL.
+		var err = _client.connect_to_url(websocket_url)
+		if err != OK:
+			print("Unable to connect")
+			set_process(false)
+	else:
+		play_game("data")
 	pass # Replace with function body.
 
 func sync_data(data):
@@ -117,44 +124,71 @@ func send_message(msg,info):
 	
 	
 func play_game(data):
-	get_node("Finding Game").visible = false
-	if data.winner == null:
+	if debug:
 		get_node("Menu").visible = false
-		get_node("ReadyFight").play()
-		playerTurn = data.playerTurn
-		turnCounter = data.turnCounter
-		players = data.players
-		if matchId == null:
-			get_node("GameScreen").visible = true
-			print("setting up game")
-			if	data.players[0].socketId == my_id:
-				first_person = 0
-			else:
-				first_person = 1
-		for x in players:
-			if(x.socketId == my_id):
-				playerOne = x
-			else:
-				playerTwo = x
-		matchId = data.matchId
-		print("playing game")
-		update_turns()
-		draw_players()
-		draw_deck()
-		draw_resources()
+		get_node("GameScreen").visible = true
+		draw_debug()
 	else:
-		get_node("Menu").visible = false
-		get_node("GameScreen").visible = false
-		get_node("Exit Game").visible = true
-		if data.winner == my_id:
-			get_node("Winner").visible = true
-			get_node("Winning").play()
-		if data.winner != my_id:
-			get_node("Loser").visible = true
-			get_node("Losing").play()
-		
+		get_node("Finding Game").visible = false
+		if data.winner == null:
+			get_node("Menu").visible = false
+			get_node("ReadyFight").play()
+			playerTurn = data.playerTurn
+			turnCounter = data.turnCounter
+			players = data.players
+			if matchId == null:
+				get_node("GameScreen").visible = true
+				print("setting up game")
+				if	data.players[0].socketId == my_id:
+					first_person = 0
+				else:
+					first_person = 1
+			for x in players:
+				if(x.socketId == my_id):
+					playerOne = x
+				else:
+					playerTwo = x
+			matchId = data.matchId
+			print("playing game")
+			update_turns()
+			draw_players()
+			draw_deck()
+			draw_resources()
+		else:
+			get_node("Menu").visible = false
+			get_node("GameScreen").visible = false
+			get_node("Exit Game").visible = true
+			if data.winner == my_id:
+				get_node("Winner").visible = true
+				get_node("Winning").play()
+			if data.winner != my_id:
+				get_node("Loser").visible = true
+				get_node("Losing").play()
+			
 	pass
 
+func draw_debug():
+	var cards = ["red1","red1","red1","red1","ice1","ice1","ice1","ice1"]
+	for x in range(get_node("GameScreen/players").get_child_count()):
+		get_node("GameScreen/players").get_child(x).queue_free()
+	var p1 = player_prefab.instance()
+	var p2 = player_prefab.instance()
+	p1.position = Vector2(300,200)
+	p2.position = Vector2(700,200)
+	get_node("GameScreen/players").add_child(p1)
+	get_node("GameScreen/players").add_child(p2)
+	for x in range(get_node("GameScreen/Hand").get_child_count()):
+		get_node("GameScreen/Hand").get_child(x).queue_free()
+	var card
+	card_count = 0
+	for x in cards:
+		card = card_prefab.instance()
+		get_node("GameScreen/Hand").add_child(card)
+		card.cardid = x
+		card.position = Vector2(65+(115*card_count),450)
+		card_count +=1
+		card.updateInfo()
+	pass
 
 func draw_players():
 	for x in range(get_node("GameScreen/players").get_child_count()):
@@ -232,4 +266,10 @@ func _on_Button_pressed():
 
 func _on_Exit_Game_pressed():
 	get_tree().quit()
+	pass # Replace with function body.
+
+
+
+func _on_ServerInfo_text_changed():
+	websocket_url = "ws://" + get_node("Menu/ServerInfo").text
 	pass # Replace with function body.

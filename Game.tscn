@@ -12,6 +12,7 @@
 script = ExtResource( 2 )
 
 [node name="Background" parent="." instance=ExtResource( 1 )]
+z_index = -2
 
 [node name="Menu" type="Control" parent="."]
 margin_left = -1.0
@@ -62,6 +63,13 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ServerInfo" type="TextEdit" parent="Menu"]
+margin_left = 411.0
+margin_top = 247.0
+margin_right = 610.0
+margin_bottom = 287.0
+text = "Enter IP:Port then find game"
 
 [node name="GameScreen" type="Control" parent="."]
 visible = false
@@ -176,8 +184,8 @@ text = "Finding Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="Menu/Exit Button" to="." method="_on_Exit_Button_pressed"]
 [connection signal="pressed" from="Menu/Find Match" to="." method="_on_Find_Match_pressed"]
+[connection signal="text_changed" from="Menu/ServerInfo" to="." method="_on_ServerInfo_text_changed"]
 [connection signal="pressed" from="Exit Game" to="." method="_on_Exit_Game_pressed"]
 [connection signal="finished" from="AudioStreamPlayer2D" to="AudioStreamPlayer2D" method="_on_AudioStreamPlayer2D_finished"]

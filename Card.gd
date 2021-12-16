@@ -21,8 +21,11 @@ func _process(delta):
 
 func _input(event):
 	if event.is_action_pressed("card picked") and mouse_inside:
-		print("this")
-		Globals.send_message("card_played",String(cardid))
+		if Globals.debug:
+			print("playing " + cardid)
+		else:
+			Globals.send_message("card_played",String(cardid))
+		#Globals.get_node(p1)
 		
 
 
@@ -40,13 +43,17 @@ func _on_ColorRect_mouse_entered():
 	pass # Replace with function body.
 
 func updateInfo():
-	var label = get_node("ToolTip/Rect/Label2")
-	for x in Globals.cards_in_game:
-		if x.id == cardid:
-			cardinfo = x
-	
-	#label.text = String(cardinfo["cardName"])
-	label.text = String(cardinfo["cardName"]) + "\n" + effect_label(cardinfo["effect"],cardinfo["target"]) + "\n" + String(abs(cardinfo["value"]))+ "\n" + resource_cost(cardinfo["resource"], cardinfo["cost"]) 
+	if Globals.debug:
+		get_node("ToolTip/Rect/Label2").text = "Card"
+	else:
+		var label = get_node("ToolTip/Rect/Label2")
+		for x in Globals.cards_in_game:
+			if x.id == cardid:
+				cardinfo = x
+		
+		#label.text = String(cardinfo["cardName"])
+		label.text = String(cardinfo["cardName"]) + "\n" + effect_label(cardinfo["effect"],cardinfo["target"]) + "\n" + String(abs(cardinfo["value"]))+ "\n" + resource_cost(cardinfo["resource"], cardinfo["cost"]) 
+		add_child(set_background(cardinfo["resource"]))
 	pass
 	
 
@@ -92,3 +99,15 @@ func resource_cost(resource,cost):
 	
 	pass
 	
+func set_background(resource):
+	var back = Sprite.new()
+	if resource == 0:
+		back.set_texture(Globals.card_background_ice)
+	elif resource == 1:
+		back.set_texture(Globals.card_background_fire)
+	elif resource == 2:
+		back.set_texture(Globals.card_background_arcane)
+	back.set_z_index(-1)
+	back.set_scale(Vector2(.05,.05))
+	return(back)
+	pass
