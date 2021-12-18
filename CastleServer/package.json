@@ -1,0 +1,17 @@
+{
+  "name": "castleserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "array-shuffle": "^3.0.0",
+    "uuid": "^8.3.2",
+    "ws": "^8.3.0"
+  }
+}
